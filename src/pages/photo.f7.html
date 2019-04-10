@@ -1,0 +1,53 @@
+<template>
+    <div class="page" data-name="detail">
+        <div class="navbar">
+            <div class="navbar-inner sliding">
+                <div class="title">음식사진 찍기</div>
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block">
+                <div class="row">
+                    <img id="food-image" src="" style="width:100%">
+                </div>
+                <br />
+                <div class="row">
+                    <input class="button button-big button-fill" type='file' id='_file' accept="image/*;capture=camera">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    import $$ from 'dom7';
+    import Service from '../js/service'
+
+    console.log('init');
+
+
+    export default {
+        methods: {},
+        on: {
+            pageInit: function () {
+                $$('#_file').on('change', function () {
+                    console.log(this);
+                    if (this.files && this.files[0]) {
+                        var reader = new FileReader();
+                        var form = new FormData();
+                        form.append("image_file", this.files[0]);
+                        Service.getPhotoClassify(form, function (data) {
+                            console.log(data);
+                        });
+                        reader.onload = function (e) {
+                            $$('#food-image').attr('src', e.target.result);
+
+                        }
+
+                        reader.readAsDataURL(this.files[0]);
+                    }
+                })
+
+            },
+        },
+    };
+</script>

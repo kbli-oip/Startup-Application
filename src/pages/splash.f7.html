@@ -1,0 +1,57 @@
+<template>
+  <!-- Page, data-name contains page name which can be used in page callbacks -->
+  <div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons ios-only">menu</i>
+            <i class="icon material-icons md-only">menu</i>
+          </a>
+        </div>
+        <div class="title sliding">뽀빠이2</div>
+        <div class="right">
+          <a href="#" class="link icon-only panel-open" data-panel="right">
+            <i class="icon f7-icons ios-only">menu</i>
+            <i class="icon material-icons md-only">menu</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div id="image">
+        <img src="../images/popeye_logo.jpg" />
+      </div>
+      <div id="title">
+        <h1 style="text-align: center">우리모두 뽀빠이</h1>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import $$ from 'dom7';
+
+  $$(document).on('page:init', function (e, page) {
+    console.log(page);
+  })
+  export default {
+    on: {
+
+      pageInit: function () {
+        console.log('splash init');
+        var self = this;
+        self.$app.navbar.hide('.navbar');
+        $$('.toolbar')[0].hidden = true;
+        setTimeout(() => {
+          var self = this;
+          self.$app.views.main.router.navigate({
+            name: 'home'
+          })
+        }, 100);
+      },
+    },
+  };
+</script>

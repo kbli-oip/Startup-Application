@@ -1,0 +1,99 @@
+<template>
+  <!-- Page, data-name contains page name which can be used in page callbacks -->
+  <div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="title sliding">뽀빠이 Startup</div>
+      </div>
+    </div>
+    <!-- FAB Left Top (Yellow) -->
+    <div class="fab fab-extended fab-right-top color-red" id="photo-btn">
+      <a href="">
+        <i class="icon f7-icons if-not-md">add</i>
+        <i class="icon material-icons md-only">add</i>
+        <div class="fab-text" id="photo-btn">Add Photo</div>
+      </a>
+    </div>
+
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="block-title">오늘의 포인트</div>
+      <div class="block block-strong">
+        <div class="row">
+          <div class="gauge point-gauge"></div>
+        </div>
+        <br>
+        <!-- <div class="row">
+          <div class="col text-align-center">
+            <div class="gauge gauge-init" data-type="semicircle" data-value="0.77" data-value-text="8pt"
+              data-border-color="#ff9800" data-label-text="8pt" data-label-text-color="#ff9800"
+              data-label-font-weight="800" data-label-font-size="12" data-border-width="10"></div>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="block">
+        <p class="row">
+          <button class="col button button-fill color-blue" id="detail-btn">포인트 적립 상세보기</button>
+        </p>
+      </div>
+      <div class="block">
+        <div class="row">
+          <div class="col">
+            <div class="elevation-demo elevation-6 elevation-hover-24 elevation-pressed-12 elevation-transition" style="height: 100px;
+            margin: 10px 10px;
+            background: #fff;
+            font-size: 18px;
+            text-align: center;
+            line-height: 100px;">
+              오늘의 운동지수</div>
+            <div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</template>
+<script>
+  import $$ from 'dom7';
+  import Service from '../js/service';
+  import HomeService from '../js/home';
+
+  export default {
+    data: function () {
+      return {
+        text: [
+          "완벽합니다. 매일 이렇게 부탁드립니다.",
+          "조금만 노력해주세요"
+        ],
+        band: ''
+      }
+    },
+    method: {
+
+    },
+    on: {
+      pageInit: function () {
+        console.log('home init');
+        HomeService.bandCreate(0, this.$app);
+        Service.getBandData((data) => {
+          this.band = data;
+          console.log(this.band);
+          HomeService.bandUpdate(1, this.text[1]);
+        });
+        $$('.toolbar')[0].hidden = false;
+
+        this.$$('#detail-btn').on('click', function () {
+          console.log('btn-click');
+          $$('#tab-detail')[0].click();
+        })
+
+        this.$$('#photo-btn').on('click', function () {
+          $$('#tab-photo')[0].click();
+        })
+      }
+    }
+  }
+</script>
